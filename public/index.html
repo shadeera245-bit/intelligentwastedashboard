@@ -142,7 +142,7 @@
       <div class="bottom-grid">
         <div class="panel">
           <div class="panel-heading">
-            <div><h3>HuskyLens · LIVE</h3><p class="subtitle">Waste detection</p></div>
+            <div><h3>HuskyLens · Detection</h3><p class="subtitle">Waste detection</p></div>
             <span class="live-badge" id="huskylensLive">WAITING</span>
           </div>
           <div class="detection-content">
@@ -150,10 +150,8 @@
             <div>
               <div class="muted">DETECTED WASTE</div>
               <h2 id="wasteType">Unknown</h2>
-              <p>Confidence: <strong id="confidenceText">0%</strong></p>
             </div>
           </div>
-          <div class="confidence-bar"><span id="confidenceProgress"></span></div>
         </div>
 
         <div class="panel">
@@ -213,7 +211,7 @@
         <div class="stat-card"><span>PLASTIC</span><strong id="analyticsPlastic">0%</strong><small>Current capacity</small></div>
         <div class="stat-card"><span>PAPER</span><strong id="analyticsPaper">0%</strong><small>Current capacity</small></div>
         <div class="stat-card"><span>METAL</span><strong id="analyticsMetal">0%</strong><small>Current capacity</small></div>
-        <div class="stat-card"><span>DETECTION</span><strong id="analyticsConfidence">0%</strong><small>HuskyLens confidence</small></div>
+        <div class="stat-card"><span>DETECTION</span><strong id="analyticsConfidence">0%</strong><small>HuskyLens detection</small></div>
       </div>
 
       <div class="analytics-grid">
@@ -245,9 +243,10 @@
           <div class="sorting-main">
             <div class="sorting-camera">
               <div class="camera-frame">
-                <div class="camera-label">HUSKYLENS · LIVE</div>
-                <div class="camera-target" id="cameraTarget">♻</div>
-                <div class="scan-line"></div>
+                <div class="camera-label">HUSKYLENS DETECTION</div>
+<div class="camera-target" id="cameraTarget">
+  <img id="wasteImage" src="/assets/paper1.png" alt="Waste Detection">
+</div>                <div class="scan-line"></div>
                 <div class="corner c1"></div><div class="corner c2"></div><div class="corner c3"></div><div class="corner c4"></div>
               </div>
             </div>
@@ -255,8 +254,7 @@
             <div class="sorting-result">
               <div class="muted">DETECTED TYPE</div>
               <h2 id="sortingWasteType">Unknown</h2>
-              <div class="confidence-bar"><span id="sortingConfidenceBar"></span></div>
-              <p>Confidence: <strong id="sortingConfidence">0%</strong></p>
+              
               <div class="servo-display"><strong id="servoAngle">90°</strong><span>SORTING SERVO</span></div>
               <div class="angle-row"><span>0°</span><span>90°</span><span>180°</span></div>
               <div class="angle-track"><i id="angleIndicator"></i></div>
