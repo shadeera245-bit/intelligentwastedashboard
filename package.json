@@ -1,18 +1,19 @@
 {
-  "name": "intelligentwastedashboard",
+  "name": "intelligent-waste-dashboard",
   "version": "1.0.0",
-  "description": "",
+  "private": true,
+  "description": "Real-time Intelligent Waste Management Dashboard using ESP32, HuskyLens and WebSocket",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
+  "engines": {
+    "node": ">=20"
+  },
   "dependencies": {
-    "express": "^5.2.1",
-    "ws": "^8.21.3"
+    "dotenv": "^16.6.1",
+    "express": "^4.21.2",
+    "web-push": "^3.6.7",
+    "ws": "^8.18.0"
   }
 }

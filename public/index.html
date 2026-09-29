@@ -3,46 +3,279 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Intelligent Waste Management</title>
-
-  <link rel="stylesheet" href="style.css">
+  <meta name="theme-color" content="#234936">
+  <meta name="description" content="Intelligent Waste Management System">
+  <title>Intelligent Waste Dashboard</title>
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" href="/assets/logo.png">
+  <link rel="stylesheet" href="/style.css">
 </head>
 
 <body>
+<div class="app-shell">
 
-  <div class="container">
-
-    <h1>Intelligent Waste Management</h1>
-
-    <p>Real-Time Monitoring Dashboard</p>
-
-    <div class="dashboard">
-
-      <div class="card">
-        <h3>Bin Capacity</h3>
-        <h2 id="capacity">0%</h2>
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-logo">
+        <img src="/assets/logo.png" alt="Logo">
       </div>
-
-      <div class="card">
-        <h3>Waste Type</h3>
-        <h2 id="wasteType">Unknown</h2>
+      <div>
+        <strong>Intelligent Waste</strong>
+        <small>MANAGEMENT SYSTEM</small>
       </div>
-
-      <div class="card">
-        <h3>Bin Status</h3>
-        <h2 id="status">Available</h2>
-      </div>
-
     </div>
 
-    <div class="location">
-      <h3>Location</h3>
-      <p>Level 1 - Area A</p>
+    <div class="nav-label">MAIN</div>
+
+    <nav class="nav">
+      <button class="nav-item active" data-page="overview">
+        <span class="nav-icon">⌂</span><span>Overview</span>
+      </button>
+      <button class="nav-item" data-page="bins">
+        <span class="nav-icon">♻</span><span>Waste Bins</span>
+      </button>
+      <button class="nav-item" data-page="analytics">
+        <span class="nav-icon">◒</span><span>Analytics</span>
+      </button>
+      <button class="nav-item" data-page="sorting">
+        <span class="nav-icon">◎</span><span>Smart Sorting</span>
+      </button>
+    </nav>
+
+    <div class="sidebar-bottom">
+      <div class="connection-card">
+        <div class="connection-dot" id="systemDot"></div>
+        <div>
+          <strong id="sidebarConnection">Live Monitoring</strong>
+          <small>SYSTEM STATUS</small>
+        </div>
+      </div>
+      <div class="version">IWM v1.0</div>
     </div>
+  </aside>
 
-  </div>
+  <main class="main">
+    <header class="topbar">
+      <div class="mobile-brand">Intelligent Waste</div>
+      <div class="topbar-right">
+        <div class="live-status">
+          <span class="live-dot"></span>
+          <span>LIVE</span>
+        </div>
+        <button class="avatar" id="notificationButton" title="Enable notifications">🔔</button>
+      </div>
+    </header>
 
-  <script src="app.js"></script>
+    <section class="page active" id="page-overview">
+      <div class="page-heading">
+        <div>
+          <div class="eyebrow">SMART WASTE MANAGEMENT</div>
+          <h1>Overview</h1>
+          <p class="subtitle">Real-time monitoring of your intelligent waste system.</p>
+        </div>
+        <div class="location-chip">
+          <span>⌖</span>
+          <div>
+            <small>LOCATION</small>
+            <strong>Level 1 · Area A</strong>
+          </div>
+        </div>
+      </div>
 
+      <div class="hero">
+        <div class="hero-content">
+          <div class="hero-tag">INTELLIGENT WASTE MANAGEMENT</div>
+          <h2>Smarter waste, <em>cleaner future.</em></h2>
+          <p>Monitor waste capacity, detect waste type, and manage your smart sorting system in real time.</p>
+          <button class="hero-button" data-page-target="sorting">View Smart Sorting <span>→</span></button>
+        </div>
+        <div class="hero-visual">
+          <div class="hero-circle"></div>
+          <div class="hero-bin"><div class="bin-lid"></div><div class="bin-body"></div></div>
+        </div>
+      </div>
+
+      <div class="section-title">
+        <div><h3>Waste Capacity</h3><p>Current bin levels</p></div>
+        <span class="updated-text" id="updatedText">Waiting for ESP32...</span>
+      </div>
+
+      <div class="bin-grid">
+        <article class="bin-card">
+          <div class="bin-card-top">
+            <div class="bin-symbol"><img src="/assets/plastic.png" alt="Plastic"></div>
+            <span class="status-pill" id="plasticStatus">Normal</span>
+          </div>
+          <div class="bin-card-name">Plastic</div>
+          <div class="fill-row"><strong id="plasticFill">0</strong><span>%</span></div>
+          <div class="progress"><span id="plasticProgress"></span></div>
+        </article>
+
+        <article class="bin-card">
+          <div class="bin-card-top">
+            <div class="bin-symbol"><img src="/assets/paper.png" alt="Paper"></div>
+            <span class="status-pill" id="paperStatus">Normal</span>
+          </div>
+          <div class="bin-card-name">Paper</div>
+          <div class="fill-row"><strong id="paperFill">0</strong><span>%</span></div>
+          <div class="progress"><span id="paperProgress"></span></div>
+        </article>
+
+        <article class="bin-card">
+          <div class="bin-card-top">
+            <div class="bin-symbol"><img src="/assets/metal.png" alt="Metal"></div>
+            <span class="status-pill" id="metalStatus">Normal</span>
+          </div>
+          <div class="bin-card-name">Metal</div>
+          <div class="fill-row"><strong id="metalFill">0</strong><span>%</span></div>
+          <div class="progress"><span id="metalProgress"></span></div>
+        </article>
+      </div>
+
+      <div class="bottom-grid">
+        <div class="panel">
+          <div class="panel-heading">
+            <div><h3>HuskyLens · LIVE</h3><p class="subtitle">Waste detection</p></div>
+            <span class="live-badge" id="huskylensLive">WAITING</span>
+          </div>
+          <div class="detection-content">
+            <div class="detection-icon" id="detectionIcon">♻</div>
+            <div>
+              <div class="muted">DETECTED WASTE</div>
+              <h2 id="wasteType">Unknown</h2>
+              <p>Confidence: <strong id="confidenceText">0%</strong></p>
+            </div>
+          </div>
+          <div class="confidence-bar"><span id="confidenceProgress"></span></div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-heading">
+            <div><h3>System Health</h3><p class="subtitle">Device monitoring</p></div>
+            <div class="health-check">✓</div>
+          </div>
+          <div class="health-list">
+            <div><span>ESP32</span><strong id="esp32Health">Waiting</strong></div>
+            <div><span>HuskyLens</span><strong id="huskylensHealth">Waiting</strong></div>
+            <div><span>Last Detection</span><strong id="lastDetectionOverview">None</strong></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="page" id="page-bins">
+      <div class="page-heading simple">
+        <div><div class="eyebrow">REAL-TIME MONITORING</div><h1>Waste Bins</h1><p class="subtitle">Monitor the capacity of each waste category.</p></div>
+      </div>
+
+      <div class="large-bin-grid">
+        <article class="large-bin-card">
+          <div class="large-bin-head"><div class="bin-symbol"><img src="/assets/plastic.png" alt="Plastic"></div><div><h3>Plastic</h3><span>Plastic waste bin</span></div><span class="status-pill" id="plasticStatusLarge">Normal</span></div>
+          <div class="big-number"><span id="plasticFillLarge">0</span><small>%</small></div>
+          <div class="progress large"><span id="plasticProgressLarge"></span></div>
+          <div class="range-labels"><span>Empty</span><span>Full</span></div>
+        </article>
+
+        <article class="large-bin-card">
+          <div class="large-bin-head"><div class="bin-symbol"><img src="/assets/paper.png" alt="Paper"></div><div><h3>Paper</h3><span>Paper waste bin</span></div><span class="status-pill" id="paperStatusLarge">Normal</span></div>
+          <div class="big-number"><span id="paperFillLarge">0</span><small>%</small></div>
+          <div class="progress large"><span id="paperProgressLarge"></span></div>
+          <div class="range-labels"><span>Empty</span><span>Full</span></div>
+        </article>
+
+        <article class="large-bin-card">
+          <div class="large-bin-head"><div class="bin-symbol"><img src="/assets/metal.png" alt="Metal"></div><div><h3>Metal</h3><span>Metal waste bin</span></div><span class="status-pill" id="metalStatusLarge">Normal</span></div>
+          <div class="big-number"><span id="metalFillLarge">0</span><small>%</small></div>
+          <div class="progress large"><span id="metalProgressLarge"></span></div>
+          <div class="range-labels"><span>Empty</span><span>Full</span></div>
+        </article>
+      </div>
+
+      <div class="panel info-panel">
+        <div><h3>Capacity Status</h3><p>The system automatically warns when a bin reaches 80%.</p></div>
+        <div class="capacity-scale"><span>● Normal</span><span>● Warning</span><span>● Full</span></div>
+      </div>
+    </section>
+
+    <section class="page" id="page-analytics">
+      <div class="page-heading simple">
+        <div><div class="eyebrow">SYSTEM DATA</div><h1>Analytics</h1><p class="subtitle">Current waste monitoring information.</p></div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card"><span>PLASTIC</span><strong id="analyticsPlastic">0%</strong><small>Current capacity</small></div>
+        <div class="stat-card"><span>PAPER</span><strong id="analyticsPaper">0%</strong><small>Current capacity</small></div>
+        <div class="stat-card"><span>METAL</span><strong id="analyticsMetal">0%</strong><small>Current capacity</small></div>
+        <div class="stat-card"><span>DETECTION</span><strong id="analyticsConfidence">0%</strong><small>HuskyLens confidence</small></div>
+      </div>
+
+      <div class="analytics-grid">
+        <div class="panel chart-panel">
+          <div class="panel-heading"><div><h3>Bin Capacity</h3><p class="subtitle">Current levels</p></div></div>
+          <div class="fake-chart"><div class="chart-lines"><i></i><i></i><i></i><i></i><i></i></div><div class="bars"><b id="barPlastic"></b><b id="barPaper"></b><b id="barMetal"></b></div></div>
+          <div class="chart-labels"><span>Plastic</span><span>Paper</span><span>Metal</span></div>
+        </div>
+
+        <div class="panel composition-panel">
+          <div class="panel-heading"><div><h3>Waste Composition</h3><p class="subtitle">Current capacity distribution</p></div></div>
+          <div class="donut" id="compositionDonut"><div><strong id="compositionTotal">0%</strong><span>TOTAL</span></div></div>
+          <div class="legend">
+            <span>● Plastic <b id="legendPlastic">0%</b></span>
+            <span>● Paper <b id="legendPaper">0%</b></span>
+            <span>● Metal <b id="legendMetal">0%</b></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="page" id="page-sorting">
+      <div class="page-heading simple">
+        <div><div class="eyebrow">AUTOMATED CLASSIFICATION</div><h1>Smart Sorting</h1><p class="subtitle">Real-time waste classification using HuskyLens.</p></div>
+      </div>
+
+      <div class="sorting-layout">
+        <div class="panel">
+          <div class="sorting-main">
+            <div class="sorting-camera">
+              <div class="camera-frame">
+                <div class="camera-label">HUSKYLENS · LIVE</div>
+                <div class="camera-target" id="cameraTarget">♻</div>
+                <div class="scan-line"></div>
+                <div class="corner c1"></div><div class="corner c2"></div><div class="corner c3"></div><div class="corner c4"></div>
+              </div>
+            </div>
+
+            <div class="sorting-result">
+              <div class="muted">DETECTED TYPE</div>
+              <h2 id="sortingWasteType">Unknown</h2>
+              <div class="confidence-bar"><span id="sortingConfidenceBar"></span></div>
+              <p>Confidence: <strong id="sortingConfidence">0%</strong></p>
+              <div class="servo-display"><strong id="servoAngle">90°</strong><span>SORTING SERVO</span></div>
+              <div class="angle-row"><span>0°</span><span>90°</span><span>180°</span></div>
+              <div class="angle-track"><i id="angleIndicator"></i></div>
+            </div>
+          </div>
+
+          <div class="mapping">
+            <div><span>Paper</span><strong>0°</strong></div>
+            <div><span>Plastic</span><strong>90°</strong></div>
+            <div><span>Metal</span><strong>180°</strong></div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-heading"><div><h3>Detection Status</h3><p class="subtitle">Current device state</p></div><span class="live-badge" id="sortingLiveStatus">WAITING</span></div>
+          <div class="health-list">
+            <div><span>HuskyLens</span><strong id="sortingHuskyStatus">Waiting</strong></div>
+            <div><span>ESP32</span><strong id="sortingESPStatus">Waiting</strong></div>
+            <div><span>Last Detection</span><strong id="lastDetection">None</strong></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script src="/app.js"></script>
 </body>
 </html>
